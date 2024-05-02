@@ -1,0 +1,108 @@
+.order {
+  margin-top: 40px;
+
+  &_title {
+    font-size: 20px;
+    font-weight: 900;
+    margin: 30px 0;
+  }
+
+.order_container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+
+  .order_form form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .order_form_row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    .order_form_title {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .input-container {
+      width: 300px !important;
+    }
+
+    .date_picker_container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      .date_picker_to_hide {
+        display: none;
+      }
+      .Mui-error {
+        color: red;
+      }
+      .MuiInputBase-root * {
+        border: none;
+      }
+      .MuiFormLabel-root {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .order_list {
+    width: 40%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+
+    &_price_block {
+      border-radius: 20px;
+      background: #F0F4FB;
+      padding: 20px 15px;
+      color: #727280;
+      font-size: 14px;
+    }
+
+    &_total {
+      padding-top: 10px;
+    }
+    &_total_bold {
+        font-weight: 900;
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &_button_block {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      width: 100%;
+
+      .ui-button {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 20px;
+        background: #2967FF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+}

@@ -1,0 +1,29 @@
+.input-container {
+  display: flex;
+  border: 1px solid #F0F4FB;
+  padding: 5px;
+  border-radius: 36px;
+  justify-content: space-between;
+  align-items: center;
+
+  .ui-icon {
+    cursor: pointer;
+  }
+
+  input {
+    border: none;
+    padding-left: 15px;
+    width: 100%;
+
+    &:active, &:focus, &:focus-visible {
+      border: none;
+      outline: none;
+    }
+  }
+
+  button {
+    border: none;
+    border-radius: 36px;
+    height: 90%;
+  }
+}

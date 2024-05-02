@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import {Base} from './pages/Base';
+import MarketPlace from './pages/MarketPlace';
+import Cart from "./pages/Cart";
+import OrderPage from "./pages/Order";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className="App wrapper">
+        <Router>
+          <Routes>
+            <Route element={<Base/>}>
+              <Route path="/" element={<Navigate to="/marketplace"/>}/>
+              <Route path="/marketplace" element={<MarketPlace/>}/>
+              <Route path="/cart" element={<Cart/>}/>
+              <Route path="/order" element={<OrderPage/>}/>
+            </Route>
+          </Routes>
+        </Router>
+      </div>
+    </LocalizationProvider>
   );
 }
 

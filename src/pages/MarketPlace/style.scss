@@ -1,0 +1,113 @@
+@import "react-slideshow-image/dist/styles.css";
+
+.marketplace {
+  margin: 0 20px;
+
+  &_title_container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+  }
+
+  &_title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &_settings {
+    color: #2967FF;
+    font-size: 12px;
+  }
+
+  .categories {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .category {
+      border-radius: 40px;
+      text-align: center;
+      color: #FFFFFF;
+      margin-right: 5px;
+      margin-top: 5px;
+      font-size: 12px;
+      padding: 2px 10px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+
+      &.active {
+        background-color: #FFFFFF !important;
+        color: #000000;
+      }
+    }
+  }
+
+  .products {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .product {
+      min-width: 190px;
+      width: calc(100% / 4 - 20px);
+      margin: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .categories {
+        position: absolute;
+        top: 35%;
+      }
+
+      img {
+        width: 80%;
+        height: 140px;
+        object-fit: cover;
+        object-position: 0 20%;
+        vertical-align: center;
+        margin: 0 auto;
+      }
+
+      &_title {
+        font-size: 14px;
+        font-weight: 400;
+        color: #2D2D2F;
+        margin-top: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &_price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2967FF;
+        margin-top: 5px;
+      }
+
+      .ui-button {
+        margin-top: 10px;
+        border: 1px solid #2967FF;
+        background: transparent;
+        color: #2967FF;
+        border-radius: 20px;
+        padding: 10px 20px;
+        width: 100%;
+
+        &.to_cart_button {
+          background: #2967FF;
+          color: #FFFFFF;
+        }
+      }
+    }
+
+    .loader {
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,0 +1,186 @@
+.basket {
+  margin: 0 20px;
+
+  &_title_container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+
+    .basket_title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .ui-button {
+      color: #FF2D87;
+      font-size: 14px;
+    }
+  }
+
+  &_main_block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #AEC2EA;
+    border-radius: 20px;
+    margin-top: 20px;
+
+    &_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+      height: 100px;
+      border-bottom: 1px solid #AEC2EA;
+      border-radius: 20px;
+      align-items: center;
+      padding-left: 10px;
+
+      .total_price_block {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        color: #2D2D2F;
+        .price_title {
+          font-size: 16px;
+          font-weight: 400;
+        }
+        .price {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+
+      .ui-button {
+        margin-top: 10px;
+        border: 1px solid #2967FF;
+        background: #2967FF;
+        color: #FFFFFF;
+        border-radius: 20px;
+        padding: 10px 50px;
+      }
+
+      .decorations {
+        width: 150px;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        position: relative;
+
+        &_pack {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          background-image: (url('../../images/Group-1.png'));
+          background-size: cover;
+
+        }
+
+        &_ticket {
+          position: absolute;
+          width: 55px;
+          height: 50px;
+          top: 0;
+          left: 62px;
+          background-image: (url('../../images/Group-2.png'));
+          background-size: cover;
+        }
+
+        &_cart {
+          position: absolute;
+          width: 53px;
+          right: 0;
+          height: 50px;
+          top: 20%;
+          background-image: (url('../../images/Group.png'));
+          background-size: cover;
+        }
+      }
+    }
+
+    &_products {
+      display: flex;
+      flex-direction: row;
+      padding: 20px;
+      flex-wrap: nowrap;
+
+      .basket_product_image {
+        min-width: calc(15% - 20px);
+        margin: 0 10px;
+        img {
+          min-width: 80%;
+          height: 100px;
+          object-fit: cover;
+          object-position: 0 20%;
+          vertical-align: center;
+          margin: 0 auto;
+        }
+      }
+
+      .basket_product_info {
+        min-width: calc(40% - 20px);
+        margin: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .basket_product_stock {
+          border: 1px solid #2967FF;
+          border-top-right-radius: 100px;
+          border-bottom-right-radius: 100px;
+          padding: 3px 15px;
+          font-size: 12px;
+          color: #2967FF;
+        }
+
+        .basket_product_count {
+          margin-left: 20px;
+          font-size: 14px;
+        }
+      }
+
+      .basket_product_count_block {
+        min-width: calc(20% - 20px);
+        margin: 0 10px;
+        display: flex;
+        flex-direction: row;
+        .input-container {
+          height: 35px;
+          width: 120px;
+          border-color: #AEC2EA;
+        }
+        .ui-input {
+          text-align: center;
+          padding: 0;
+        }
+        .ui-icon {
+          width: 25px;
+          height: 25px;
+          margin: 0 5px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .basket_product_price_block {
+        min-width: calc(15% - 20px);
+        margin: 0 10px;
+      }
+      .basket_product_remove_block {
+        min-width: calc(10% - 20px);
+        margin: 0 10px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+    }
+  }
+
+}

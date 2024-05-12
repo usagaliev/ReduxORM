@@ -23,6 +23,7 @@
     "@types/redux-orm": "^0.16.1",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
+    "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.3",

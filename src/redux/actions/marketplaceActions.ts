@@ -1,6 +1,6 @@
 import axios from "axios";
 import marketStore from "../../models/markerModels";
-import {getImages, getPrices} from "../../models/markerModels/Product";
+import {clearProducts, getImages, getPrices} from "../../models/markerModels/Product";
 
 const api = 'https://test2.sionic.ru/api/'
 
@@ -18,25 +18,27 @@ export const getCategories = async (dispatch: any) => {
 }
 
 export const getProducts = async (dispatch: any, params?: any) => {
-	await axios.get(`${api}Products?${params}`).then((response) => {
+	return await axios.get(`${api}Products?${params}`).then((response) => {
 		const {data} = response;
 		data.forEach((productData: any) => {
-			console.log(productData, 'productData');
 			dispatch(createProducts(productData));
 		});
-		console.log(data, 'data');
+		return data;
 	}).catch((error) => {
 		console.error('Error fetching and storing data:', error);
 	});
 }
 
-export const getProductPrices = async (dispatch: any, params?: any) => {
-	await axios.get(api + 'ProductVariations').then((response) => {
+export const getProductPrices = async (dispatch: any, id?: any, signal?: any) => {
+	await axios.get(`${api}ProductVariations/${id ? id : ''}`, {signal}).then((response) => {
 		const {data} = response;
-		data.forEach((productData: any) => {
-			dispatch(getPrices(productData));
-		});
-		return data;
+		if ((data?.length > 0)) {
+			data?.forEach((productData: any) => {
+				dispatch(getPrices(productData));
+			});
+		} else {
+			dispatch(getPrices(data));
+		}
 	}).catch((error) => {
 		console.error('Error fetching and storing data:', error);
 	});
@@ -54,4 +56,8 @@ export const getProductImages = async (dispatch: any, params?: any) => {
 	}).catch((error) => {
 		console.error('Error fetching and storing data:', error);
 	});
+}
+
+export const clearAllProducts = async (dispatch: any, products: any) => {
+	dispatch(clearProducts(products));
 }

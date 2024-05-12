@@ -7,6 +7,7 @@ import Cart from "./pages/Cart";
 import OrderPage from "./pages/Order";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import HistoryPage from "./pages/Order/HistoryPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/marketplace" element={<MarketPlace/>}/>
               <Route path="/cart" element={<Cart/>}/>
               <Route path="/order" element={<OrderPage/>}/>
+              <Route path="/order-history" element={<HistoryPage/>}/>
             </Route>
           </Routes>
         </Router>

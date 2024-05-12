@@ -1,8 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './style.scss';
-import { Slide } from 'react-slideshow-image';
 import {Category, Product} from "../../types";
-import {getCategories, getProductImages, getProductPrices, getProducts} from "../../redux/actions/marketplaceActions";
+import {
+	clearAllProducts,
+	getCategories,
+	getProductImages,
+	getProductPrices,
+	getProducts
+} from "../../redux/actions/marketplaceActions";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {categorySelector, productSelector} from "../../redux/selectors/MarketplaceSelectors";
 import Categories from "../../components/Categories";
@@ -13,10 +18,13 @@ import {addToCart} from "../../redux/actions/cartActions";
 import {cartSelector} from "../../redux/selectors/CartSelectors";
 
 const MarketPlace: React.FC = () => {
+	const controller = new AbortController();
+	const {signal} = controller;
 	const dispatch = useAppDispatch();
 	const [activeCategories, setActiveCategories] = useState<number[]>([]);
-	const [range, setRange] = useState(50);
+	const [range, setRange] = useState(24);
 	const [categoryIds, setCategoryIds] = useState<number[]>([]);
+	const [productIds, setProductIds] = useState<any[]>([]);
 	const categories = useAppSelector(categorySelector) as Category[];
 	const products = useAppSelector(productSelector) as Product[]
 	const productsInCart = useAppSelector(cartSelector) as Product[]
@@ -29,42 +37,13 @@ const MarketPlace: React.FC = () => {
 			})))
 	const [isLoading, setIsLoading] = useState(false);
 
-	const productIds = products?.map((product) => product?.productsToShow).filter((id) => id);
 
-	const spanStyle = {
-		padding: '20px',
-		background: '#efefef',
-		color: '#000000'
-	}
+	const start = 0;
+	const end = range;
+	const result = [];
 
-	const divStyle = {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundSize: 'cover',
-		height: '400px'
-	}
-
-	const slideshow = (product: any) => {
-		const imagesToSlide = []
-
-		if (product?.id === product?.product_id) {
-			imagesToSlide.push(product)
-		}
-
-		return (
-			<div className="slide-container">
-				<Slide>
-					{imagesToSlide?.map((slideImage: any)=> (
-						<div key={slideImage.id}>
-							<div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.image_url})` }}>
-								<span style={spanStyle}>{slideImage.image_name}</span>
-							</div>
-						</div>
-					))}
-				</Slide>
-			</div>
-		)
+	for (let i = start; i <= end; i++) {
+		result.push(i);
 	}
 
 	const queryParamsHandler = ({filter, sort, range}: any) => {
@@ -82,7 +61,6 @@ const MarketPlace: React.FC = () => {
 		})
 		return decodeURIComponent(params.toString())
 	}
-
 	const categoryParams = queryParamsHandler({
 		sort: `["id","ASC"]`,
 		range: `[0,${range}]`,
@@ -94,29 +72,48 @@ const MarketPlace: React.FC = () => {
 		filter: productIds?.length && `{"product_id":[${productIds}]}`,
 	})
 
-	console.log(products, 'products');
-
 	const fetchData = async () => {
 		setIsLoading(true);
 		await getCategories(dispatch);
-		await getProducts(dispatch, categoryParams);
-		await getProductImages(dispatch, productsParams);
-		await getProductPrices(dispatch);
 	};
 
-	const handleFilter = (categoryId: number) => {
+	const handleFilter = async (categoryId: number) => {
+		await clearAllProducts(dispatch, fullProducts);
 		setCategoryIds((prev) => {
 			if (prev.includes(categoryId)) {
-				return prev.filter((id) => id !== categoryId)
+				return prev.filter((id) => id !== categoryId);
 			} else {
-				return [...prev, categoryId]
+				return [...prev, categoryId];
 			}
-		})
+		});
 	}
+
 
 	useEffect(() => {
 		fetchData();
+		getProducts(dispatch, categoryParams).then((response: any) => {
+				if (categoryIds?.length !== 0) {
+					const newIds = response?.map((product: any) => {
+						if (product.id) {
+							return product.id
+						}
+					})
+					setProductIds(newIds)
+				} else {
+					setProductIds([])
+					getProductPrices(dispatch)
+				}
+			}
+		)
 	}, [dispatch, categoryParams, categoryIds]);
+
+	useEffect(() => {
+		getProductImages(dispatch, productsParams).then(() => {
+			for (const id of productIds) {
+				getProductPrices(dispatch, id, signal);
+			}
+		})
+	}, [productIds]);
 
 	useEffect(() => {
 		setFullProducts(products?.filter((product) => {
@@ -187,7 +184,6 @@ const MarketPlace: React.FC = () => {
 									}
 								})}
 								</div>
-							{/*{slideshow(product)}*/}
 							<img src={product?.image_url} alt={product?.image_name}/>
 							<span className='product_title' title={product?.name}>{slicedText(product?.name, 40)}</span>
 							<span className='product_price'>{`от ${product?.price?.toLocaleString()} ₽`}</span>

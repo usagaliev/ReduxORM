@@ -5,9 +5,10 @@ import './style.scss'
 interface UiIconProps {
 	name: string;
 	onClick?: () => void;
+	additionalClassName?: string;
 }
 
-const UiIcon: FC<UiIconProps> = ({name, onClick}) => {
+const UiIcon: FC<UiIconProps> = ({name, onClick, additionalClassName}) => {
 	const getIcon = (
 		name: string,
 	): React.FC<React.SVGProps<SVGSVGElement>> => {
@@ -24,7 +25,7 @@ const UiIcon: FC<UiIconProps> = ({name, onClick}) => {
 	if (Icon) {
 		return (
 			<div
-				className='ui-icon'
+				className={`ui-icon ${additionalClassName}`}
 				onClick={onClick}
 				style={{cursor: onClick ? 'pointer' : 'default'}}
 			>

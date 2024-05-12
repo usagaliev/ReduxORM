@@ -2,6 +2,7 @@ import { createAction } from "@reduxjs/toolkit";
 import Model, { attr } from "redux-orm";
 
 export const createOrder = createAction("models/order/create");
+export const removeOrder = createAction("models/order/remove");
 
 export class Order extends Model {
 	static modelName = "Order";
@@ -26,6 +27,10 @@ export class Order extends Model {
 				} else {
 					Order.upsert(payload);
 				}
+				break;
+			}
+			case removeOrder.type: {
+				Order.all().delete()
 				break;
 			}
 			default:

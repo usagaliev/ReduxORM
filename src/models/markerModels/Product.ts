@@ -6,6 +6,7 @@ import {createCart} from "../cartModels/Cart";
 export const createProducts = createAction("models/product/create");
 export const getImages = createAction("models/product/getImages");
 export const getPrices = createAction("models/product/getPrices");
+export const clearProducts = createAction("models/product/clear");
 
 export class Product extends Model {
 	static modelName = "Product";
@@ -21,13 +22,14 @@ export class Product extends Model {
 			stock: attr(),
 			description: attr(),
 			productsToShow: attr(),
+			newIds: attr(),
 		};
 	}
 
 	static reducer({ type, payload }: any, Product: any, session: any) {
 		switch (type) {
 			case createProducts.type: {
-				Product.upsert(payload);
+				Product.upsert({...payload, newIds: payload.id});
 				break;
 			}
 			case getImages.type: {
@@ -41,6 +43,10 @@ export class Product extends Model {
 				const product = Product.withId(product_id);
 				product?.update({ price, product_id, stock });
 
+				break;
+			}
+			case clearProducts.type: {
+				Product.all().delete();
 				break;
 			}
 			default:

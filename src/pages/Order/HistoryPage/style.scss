@@ -1,0 +1,121 @@
+.history {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14.64px;
+  text-align: left;
+
+  .history_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+
+  &_item {
+    width: calc(450px - 40px);
+    height: fit-content;
+    border: 1px solid #AEC2EA;
+    border-radius: 32px;
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  &_item_info_container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+    .ui-icon {
+      display: flex;
+      flex-direction: row;
+      align-self: flex-start;
+
+      &.rotate {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &_item_info {
+    display: flex;
+    flex-direction: row;
+
+    .history-order-image {
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+    }
+    &_title {
+      margin-right: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      p {
+        color: #727280;
+        font-size: 14px;
+      }
+
+      h5 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2D2D2F;
+        margin-bottom: 10px;
+      }
+    }
+
+    &_button {
+      display: flex;
+      align-items: flex-end;
+
+      .ui-button {
+        color: #2967FF;
+      }
+    }
+  }
+
+  .history_item_products {
+    display: flex;
+    flex-direction: column;
+
+    .history_item_products_block {
+      display: flex;
+      flex-direction: row;
+      margin-top: 20px;
+
+      .history_item_products_orderNo:not(.title) {
+        .history_item_products_orderNo_text {
+          color: #2967FF;
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+
+          p {
+            padding-right: 3px;
+          }
+        }
+
+      }
+
+      p {
+        padding-right: 20px;
+        font-weight: 700;
+        font-size: 12px;
+
+        &.title {
+            color: #727280;
+          padding-bottom: 3px;
+        }
+      }
+    }
+  }
+
+}

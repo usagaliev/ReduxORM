@@ -16,23 +16,30 @@ const Cart = () => {
 	const navigate = useNavigate()
 	const [internalCartProducts, setInternalCartProducts] = useState(cartProducts);
 	const [totalPrice, setTotalPrice] = useState(0);
-	const [cart, setCart] = useState();
+	const [cart, setCart] = useState<any>();
 	const [inputValue, setInputValue] = useState(1);
+	const [totalProducts, setTotalProducts] = useState(0);
+	const [isBought, setIsBought] = useState(false);
 	const count = 1;
 
 	useEffect(() => {
 		const totalPrice = internalCartProducts?.reduce((acc, product) =>
 			product.count ? ((acc + product.price) * product.count) : (acc + product.price), 0);
 		setTotalPrice(totalPrice);
+
+		const totalProducts = internalCartProducts?.reduce((acc, product) =>
+			product.count ? (acc + product.count) : (acc + 1), 0);
+		setTotalProducts(totalProducts);
 	}, [inputValue, cartProducts]);
 
 	useEffect(() => {
 		const updatedCart = {
 			totalPrice,
+			totalProducts,
 			products: internalCartProducts
 		};
 		setCart(updatedCart as any);
-	}, [internalCartProducts, totalPrice]);
+	}, [internalCartProducts, totalPrice, totalProducts]);
 
 	const handleStepPlus = (product: Product) => {
 		const updatedProducts = internalCartProducts.map((cartProduct) => {
@@ -64,7 +71,7 @@ const Cart = () => {
 	};
 
 	const handleOrder = () => {
-		if (cart) {
+		if (cart?.products.length) {
 			makeOrder(cart, dispatch);
 			navigate('/order')
 		}
@@ -74,6 +81,26 @@ const Cart = () => {
 		removeFromCart(cartProducts, dispatch)
 		setInternalCartProducts([]);
 		setTotalPrice(0);
+	}
+
+	const isProductBought = (product: any) => {
+		const orders = localStorage.getItem('order');
+		let productCount = 0
+		const parsedOrders = orders && JSON.parse(orders);
+		if (Array.isArray(parsedOrders)) {
+			parsedOrders.forEach((order) =>
+				order.orderData?.forEach((orderProduct: any) =>
+					orderProduct?.products?.forEach((productInOrder: any) =>{
+						if (product.id === productInOrder.id) {
+							productCount += productInOrder.count
+							}
+						}
+					)
+				)
+			);
+		}
+
+		return productCount
 	}
 
 	return (
@@ -105,7 +132,9 @@ const Cart = () => {
 							<span className='basket_product_title'>{product?.name}</span>
 							<div className='basket_product_info_stock'>
 								<span className='basket_product_stock'>{`${product?.stock} шт.`}</span>
-								<span className='basket_product_count'>Куплено: 150 шт.</span>
+								{isProductBought(product) ? (
+									<span className='basket_product_count'>Куплено: {isProductBought(product)} шт.</span>
+								) : null}
 							</div>
 						</div>
 						<div className='basket_product_count_block'>
@@ -124,7 +153,7 @@ const Cart = () => {
 							/>
 						</div>
 						<div className='basket_product_price_block'>
-							<span className='product_price'>{`от ${product?.price} ₽`}</span>
+							<span className='product_price'>{`от ${product?.price.toLocaleString()} ₽`}</span>
 						</div>
 						<div className='basket_product_remove_block'>
 							<UiIcon name='RemoveIcon' onClick={() => {

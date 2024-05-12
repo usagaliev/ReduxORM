@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "Railway";
+    font-family: "Raleway";
     src: url("./fonts/Raleway-Regular.ttf");
 }
 
@@ -10,7 +10,8 @@
 }
 
 body {
-    font-family: "Railway", sans-serif;
+    font-family: "Raleway", sans-serif;
+    font-feature-settings: 'lnum' 1;
 }
 
 .wrapper {
@@ -19,23 +20,24 @@ body {
     height: 100vh;
     justify-content: space-between;
     align-items: start;
+}
 
-    .app-section {
-        margin: 0 auto;
+.app-section {
+    margin: 0 auto;
+    width: 100%;
+
+    .content-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: start;
         width: 100%;
+        max-width: 1200px;
+        margin: 10px auto;
 
-        .content-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: start;
-            width: 1200px;
-            margin: 10px auto;
-
-            .content {
-                width: 75%;
-                margin: 0 10px;
-            }
+        .content {
+            width: 100%;
+            margin: 0 10px;
         }
     }
 }
@@ -46,4 +48,25 @@ button {
 
 a {
     text-decoration: none;
+}
+
+@media (max-width: 1068px) {
+    .app-section .content-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .app-section .content-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .app-section .content-container .content {
+        width: 100%;
+        margin: 10px 0;
+    }
+    border-bottom: 1px solid #F0F4FB;
 }

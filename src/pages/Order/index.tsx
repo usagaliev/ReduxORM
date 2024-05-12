@@ -9,12 +9,14 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {cartSelector, orderSelector} from "../../redux/selectors/CartSelectors";
-import {removeFromCart} from "../../redux/actions/cartActions";
+import {clearOrders, removeFromCart} from "../../redux/actions/cartActions";
+import {useNavigate} from "react-router-dom";
 
 const OrderPage = () => {
 	const orderData = useAppSelector(orderSelector) as any;
 	const cartProducts = useAppSelector(cartSelector)
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate()
 
 	const schema = yup.object().shape({
 		name: yup.string().required(),
@@ -35,6 +37,7 @@ const OrderPage = () => {
 
 	const deliveryPrice = 300;
 	const totalPrice = orderData?.length && orderData[0]?.totalPrice;
+	const totalCount = orderData?.length && orderData[0]?.totalProducts;
 	const total = totalPrice + deliveryPrice;
 
 	const handleOpen = (type: string) => {
@@ -67,13 +70,39 @@ const OrderPage = () => {
 	}
 
 	const onSubmit = (data: any) => {
+		const id = Date.now().toString();
+		const orders = localStorage.getItem('order');
+		const parsedOrders = orders ? JSON.parse(orders) : [];
+		const allOrders = [];
+
 		const collectData = {
 			orderData,
 			orderInfo: data,
+			orderId: id,
+			orderName: `#${id}`,
+			orderStatus: 'Оплачен/Завершен',
+			totalCount,
+			total
+		};
+
+		if (parsedOrders.length) {
+			const existingOrder = parsedOrders.find((order: any) => order.orderId !== id);
+			if (existingOrder) {
+				allOrders.push(...parsedOrders, collectData);
+			} else {
+				allOrders.push(...parsedOrders);
+			}
+		} else {
+			allOrders.push(collectData);
 		}
-		localStorage.setItem('order', JSON.stringify(collectData));
+
+		localStorage.setItem('order', JSON.stringify(allOrders));
+
 		removeFromCart(cartProducts, dispatch);
+		clearOrders(cartProducts, dispatch);
+		navigate('/order-history');
 	}
+
 
 	return (
 		<div className='order'>

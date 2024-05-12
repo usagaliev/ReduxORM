@@ -24,6 +24,7 @@ export interface Product {
 	isInCart?: boolean;
 	totalProductPrice?: number;
 	count?: number;
+	newIds?: number;
 }
 
 export interface CartItem {

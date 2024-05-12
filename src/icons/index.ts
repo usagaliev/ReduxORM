@@ -8,6 +8,8 @@ import RemoveIcon from "./RemoveIcon";
 import MinusIcon from "./MinusIcon";
 import PlusIcon from "./PlusIcon";
 import NavigateIcon from "./NavigateIcon";
+import ArrowIcon from "./ArrowIcon";
+import CopyIcon from "./CopyIcon";
 
 export default {
 	PinIcon,
@@ -19,5 +21,7 @@ export default {
 	RemoveIcon,
 	MinusIcon,
 	PlusIcon,
-	NavigateIcon
+	NavigateIcon,
+	ArrowIcon,
+	CopyIcon
 }
